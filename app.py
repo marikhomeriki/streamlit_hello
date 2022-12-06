@@ -255,7 +255,9 @@ st.markdown("# Graphs and Review Data 📊")
 st.sidebar.markdown("# Page 3: 📊")
 
 # TODO: use environment variables
-data = requests.get("https://pra-icpdyxu5pq-nw.a.run.app/mock-analyze").json()
+API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/mock-analyze"
+API_URL_LOCAL = "http://localhost:8080/mock-analyze"
+data = requests.get().json(API_URL_REMOTE)
 
 cnn_model = pd.DataFrame.from_dict(data['cnn_model'], orient='index')
 words = data['words']

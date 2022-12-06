@@ -17,7 +17,7 @@ st.set_page_config(page_title="Product Review Analysis",
 async def api_call(source, url, pages):
     # TODO: use environment variables
     API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/analyze"
-    API_URL_LOCAL = "http://localhost:8080/mock-analyze"
+    API_URL_LOCAL = "http://localhost:8080/analyze"
 
     timeout = aiohttp.ClientTimeout(total=600)
     params = {'source': source, 'url': url, 'pages': pages}
@@ -66,7 +66,7 @@ form = st.form("form", clear_on_submit=True)
 with form:
     source = st.radio("Choose review data source", ('Yelp', 'TrustPilot'))
     url = st.text_input("URL")
-    pages = st.slider("Number of Pages", 0, 40, 2, step=1)
+    pages = st.slider("Number of Pages", 1, 10, 1, step=1)
     submit = form.form_submit_button("Submit Now")
 
     if submit:

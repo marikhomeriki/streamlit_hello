@@ -9,7 +9,8 @@ wordcloud = "*"
 matplotlib = "*"
 numpy = "*"
 pandas = "*"
-requests = "*"
+asyncio = "*"
+aiohttp = "*"
 
 [dev-packages]
 

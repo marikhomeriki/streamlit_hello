@@ -23,7 +23,7 @@ async def api_call(source, url, pages):
     params = {'source': source, 'url': url, 'pages': pages}
 
     async with aiohttp.ClientSession(timeout=timeout) as session:
-        async with session.get(API_URL_LOCAL, params=params) as response:
+        async with session.get(API_URL_REMOTE, params=params) as response:
             data = await response.json()
             st.session_state['data'] = data
             st.experimental_rerun()

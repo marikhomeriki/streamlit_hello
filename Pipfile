@@ -5,6 +5,11 @@ name = "pypi"
 
 [packages]
 streamlit = "*"
+wordcloud = "*"
+matplotlib = "*"
+numpy = "*"
+pandas = "*"
+requests = "*"
 
 [dev-packages]
 

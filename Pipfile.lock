@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b443f81eab5b16ff82f36b065e031ff728dab8b15072c013fcdf16f44b9ac322"
+            "sha256": "f092ab85e05d562e499da3b3c6004f2351faefbe87ff74f5e73c97ca6fc93f7b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -1081,7 +1081,7 @@
             "hashes": [
                 "sha256:24148ce4e64100a2d5e267233e23e7afeb55316b47d30faae7eb6e7292bc226a"
             ],
-            "markers": "python_version >= '3.4'",
+            "index": "pypi",
             "version": "==0.20.0"
         },
         "wordcloud": {

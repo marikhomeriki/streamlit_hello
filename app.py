@@ -15,7 +15,7 @@ st.markdown ("""
     </style>
     """,unsafe_allow_html=True)
 
-st.title("Product Review Analysis 42")
+st.title("Product Review Analysis")
 
 with st.container():
     left_col,mid_col,right_col = st.columns(3)

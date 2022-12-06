@@ -3,9 +3,29 @@ import numpy as np
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import pandas as pd
-import requests
+import asyncio
+import aiohttp
+from datetime import datetime
 
 st.set_page_config(page_title="Product Review Analysis", page_icon= "tada", layout= "wide")
+
+async def api_call():
+    # TODO: use environment variables
+    API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/analyze"
+    API_URL_LOCAL = "http://localhost:8080/mock-analyze"
+
+    timeout = aiohttp.ClientTimeout(total=600)
+    async with aiohttp.ClientSession(timeout=timeout) as session:
+        async with session.get(API_URL_REMOTE) as response:
+            data = await response.json()
+            st.session_state['data'] = data
+            st.experimental_rerun()
+
+if st.button('Load'):
+    # Run api call asynchronously not to block streamlit
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(api_call())
 
 st.markdown ("""
     <style>
@@ -254,35 +274,33 @@ with c2:
 st.markdown("# Graphs and Review Data 📊")
 st.sidebar.markdown("# Page 3: 📊")
 
-# TODO: use environment variables
-API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/mock-analyze"
-API_URL_LOCAL = "http://localhost:8080/mock-analyze"
-data = requests.get().json(API_URL_REMOTE)
+data = st.session_state.get('data', None)
 
-cnn_model = pd.DataFrame.from_dict(data['cnn_model'], orient='index')
-words = data['words']
-words2v_neg = pd.DataFrame.from_dict(data['words2v_neg'])
-words2v_pos = pd.DataFrame.from_dict(data['words2v_pos'])
-# absa = pd.DataFrame.from_dict(data['absa'])
+if data:
+    cnn_model = pd.DataFrame.from_dict(data['cnn_model'], orient='index')
+    words = data['words']
+    words2v_neg = pd.DataFrame.from_dict(data['words2v_neg'])
+    words2v_pos = pd.DataFrame.from_dict(data['words2v_pos'])
+    absa = pd.DataFrame.from_dict(data['absa'])
 
-st.bar_chart(cnn_model)
+    st.bar_chart(cnn_model)
 
-wordcloud = WordCloud().generate(words)
+    wordcloud = WordCloud().generate(words)
 
-# Display the generated image:
-st.set_option('deprecation.showPyplotGlobalUse', False)
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis("off")
-plt.show()
-st.pyplot()
+    # Display the generated image:
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    plt.show()
+    st.pyplot()
 
-c1,c2= st.columns(2)
-with c1:
-    st.write(words2v_neg)
-    st.bar_chart(words2v_neg)
-with c2:
-    st.write(words2v_pos)
-    st.bar_chart(words2v_pos)
+    c1,c2= st.columns(2)
+    with c1:
+        st.write(words2v_neg)
+        st.bar_chart(words2v_neg)
+    with c2:
+        st.write(words2v_pos)
+        st.bar_chart(words2v_pos)
 
-# st.write(absa)
-# st.bar_chart(absa)
+    st.write(absa)
+    st.bar_chart(absa)

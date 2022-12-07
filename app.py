@@ -1,12 +1,14 @@
 import streamlit as st
 import numpy as np
-from wordcloud import WordCloud
+from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 import pandas as pd
 import asyncio
 import aiohttp
 import validators
 from datetime import datetime
+import numpy as np
+import altair as alt
 
 st.set_page_config(page_title="Product Review Analysis",
                    page_icon="tada",
@@ -16,7 +18,7 @@ st.set_page_config(page_title="Product Review Analysis",
 #Async START
 async def api_call(source, url, pages):
     # TODO: use environment variables
-    API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/analyze"
+    API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/mock-analyze"
     API_URL_LOCAL = "http://localhost:8080/analyze"
 
     timeout = aiohttp.ClientTimeout(total=600)
@@ -85,7 +87,7 @@ with tab1:
     st.markdown('# Summary📈')
     st.write("Product Review Analysis uses live-users-reviews from 'Yelp' or 'Trustpilot'\
         websites to analyse topic distribution by sentiment of the reviews, \
-            for business to make feedback based decisions.")
+            for businesses to make better decisions.")
 
 with tab2:
     st.markdown("# Running the Data 😮")
@@ -121,7 +123,20 @@ with tab2:
     data = st.session_state.get('data', None)
     #Async get data END
 
+
+
+
+
     if data:
+        col1, col2 = st.columns(2)
+        with col1:
+            st.header("Total")
+            total = data['review_count']
+            st.write(total)
+
+        with col2:
+            st.header("AVG")
+            st.write(data['average_score'])
         st.markdown("# Graphs and Review Data 📊")
         st.markdown("#### Negative vs. Positive Reviews")
         cnn_model = pd.DataFrame.from_dict(data['cnn_model'], orient='index')
@@ -134,7 +149,7 @@ with tab2:
         st.bar_chart(cnn_model)
 
 
-        wordcloud = WordCloud(background_color="#F5F6F8").generate(words)
+        wordcloud = WordCloud(background_color="#F5F6F8", stopwords = STOPWORDS).generate(words)
 
         # Display the generated image:
         st.markdown("#### Most used words")
@@ -148,12 +163,31 @@ with tab2:
         c1, c2 = st.columns(2)
         with c1:
             st.markdown("#### Negatively used words")
+            # st.write(words2v_neg)
+            # st.bar_chart(words2v_neg)
+            words2v_neg.reset_index(inplace = True)
+            words2v_neg.columns = ["Words", "Scores"]
             st.write(words2v_neg)
-            st.bar_chart(words2v_neg)
+            st.altair_chart(alt.Chart(words2v_neg).mark_bar(color='red',
+            ).encode(
+            x='Words',
+            y='Scores'))
+
         with c2:
             st.markdown("#### Positively used words")
+            # st.write(words2v_pos)
+            # st.bar_chart(words2v_pos)
+            words2v_pos.reset_index(inplace = True)
+            words2v_pos.columns = ["Words", "Scores"]
             st.write(words2v_pos)
-            st.bar_chart(words2v_pos)
+            st.altair_chart(alt.Chart(words2v_pos).mark_bar(color='green',
+            ).encode(
+            x='Words',
+            y='Scores'))
+
+
+
+
 
         st.write(absa)
         st.bar_chart(absa)
@@ -165,7 +199,9 @@ with tab3:
 
         if csv is not None and csv.type == 'text/csv':
             df = pd.read_csv(csv)
+            df = df.reset_index()
             st.write(df)
+
         elif csv is not None and csv.type != 'text/csv':
             st.write('Not a CSV file')
 

@@ -83,6 +83,9 @@ tab1,tab2,tab3,tab4 = st.tabs(["Summary 📈","Running the Data 😮","Backup Da
 
 with tab1:
     st.markdown('# Summary📈')
+    st.write("Product Review Analysis uses live-users-reviews from 'Yelp' or 'Trustpilot'\
+        websites to analyse topic distribution by sentiment of the reviews, \
+            for business to make feedback based decisions.")
 
 with tab2:
     st.markdown("# Running the Data 😮")

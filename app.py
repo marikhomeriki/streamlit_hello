@@ -18,7 +18,7 @@ st.set_page_config(page_title="Product Review Analysis",
 #Async START
 async def api_call(source, url, pages):
     # TODO: use environment variables
-    API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/mock-analyze"
+    API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/analyze"
     API_URL_LOCAL = "http://localhost:8080/analyze"
 
     timeout = aiohttp.ClientTimeout(total=600)

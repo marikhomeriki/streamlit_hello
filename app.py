@@ -78,8 +78,11 @@ with st.container():
 #         #     , Arun Appulingam")
 #         st.write("By Mariami Khomeriki, Ankur Kaushal, Mathias Freisleben, Arun Appulingam")
 
-tab1,tab2,tab3,tab4 = st.tabs(["Introduction 📈","Running the Data 😮","Backup Data 🔙"\
+tab1,tab2,tab3,tab4 = st.tabs(["Summary 📈","Running the Data 😮","Backup Data 🔙"\
     ,"Review on Website🌐"])
+
+with tab1:
+    st.markdown('# Summary📈')
 
 with tab2:
     st.markdown("# Running the Data 😮")

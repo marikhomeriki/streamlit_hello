@@ -1,14 +1,14 @@
 [theme]
 
-primaryColor="#7792E3"
+primaryColor="#262730"
 
-backgroundColor="#FFFFFF"
+backgroundColor="#F5F6F8"
 
 secondaryBackgroundColor="#B9F1C0"
 
 textColor="#262730"
 
-font="serif"
+font="monogram"
 
 
 [deprecation]

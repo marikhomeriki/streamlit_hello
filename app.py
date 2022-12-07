@@ -10,13 +10,13 @@ from datetime import datetime
 
 st.set_page_config(page_title="Product Review Analysis",
                    page_icon="tada",
-                   layout="wide")
+                   layout="wide", )
 
 
 #Async START
 async def api_call(source, url, pages):
     # TODO: use environment variables
-    API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/analyze"
+    API_URL_REMOTE = "https://pra-icpdyxu5pq-nw.a.run.app/mock-analyze"
     API_URL_LOCAL = "http://localhost:8080/analyze"
 
     timeout = aiohttp.ClientTimeout(total=600)
@@ -31,31 +31,57 @@ async def api_call(source, url, pages):
 
 #Async END
 
-original_title = '<b style="font-family:serif; text-align:center; color:black; font-size: 70px;">Product Review Analysis</b>'
+original_title = '<b style="text-align:center; color:black; font-size: 70px;">Product Review Analysis</b>'
 st.markdown(original_title, unsafe_allow_html=True)
 
+st.sidebar.markdown("# What is a Review Analysis?")
+st.sidebar.markdown("Review analysis is the act of going through customer\
+        and product reviews from a number of different channels and uncovering \
+        insights. These insights can then be used to improve products and \
+        services, create new ones, or enhance the overall customer experience.")
+st.sidebar.write("---")
+x = st.sidebar.slider('Rate this website:',0,5)
+if x==1:
+    st.sidebar.markdown("⭐")
+if x==2:
+    st.sidebar.markdown("⭐⭐")
+if x==3:
+    st.sidebar.markdown("⭐⭐⭐")
+if x==4:
+    st.sidebar.markdown("⭐⭐⭐⭐")
+if x==5:
+    st.sidebar.markdown("⭐⭐⭐⭐⭐")
+
+y = st.sidebar.text_area("Feedback:",max_chars=250)
+st.sidebar.write("---")
+z = st.sidebar.button("Submit")
+
+
 with st.container():
-    left_col, mid_col, right_col = st.columns(3)
+    left_col,mid_col,right_col = st.columns(3)
     with left_col:
-        st.header("By Mariami Khomeriki, Ankur Kaushal, Mathias Freisleben\
-            , Arun Appulingam")
+        st.markdown("### By Mariami Khomeriki, Ankur Kaushal,        \
+               Mathias Freisleben, Arun Appulingam")
 
-st.write("---")
-st.markdown("# Introduction 📈")
-st.sidebar.markdown("# Page 1: 📈")
-st.header("Main Tasks")
+    with right_col:
+        # file = open("https://cdn.searchenginejournal.com/wp-content/uploads/2021/04/google-product-reviews-update-606f3672ab023.jpg", 'rb')
+        # contents = file.read()
+        # data_url = base64.b64encode(contents).decode('utf-8-sig')
+        # file.close()
+        # st.markdown(f'<img src="data:image/gif;base64,{data_url}">',unsafe_allow_html = True)
+        st.image("https://cdn.searchenginejournal.com/wp-content/uploads/2021/04/google-product-reviews-update-606f3672ab023.jpg")
 
-st.write("This project is based around..........")
+# with st.container():
+#     left_col, mid_col, right_col = st.columns(3)
+#     with left_col:
+#         # st.header("By Mariami Khomeriki, Ankur Kaushal, Mathias Freisleben\
+#         #     , Arun Appulingam")
+#         st.write("By Mariami Khomeriki, Ankur Kaushal, Mathias Freisleben, Arun Appulingam")
 
-st.write("We divided the task in this were split within the group:")
-st.write("Mari:")
-st.write("Ankur:")
-st.write("Mathias:")
-st.write(
-    "Arun: Creating a Sequential and CNN base model, helped clean data, using Streamline to make this website :)"
-)
+tab1,tab2,tab3,tab4 = st.tabs(["Introduction 📈","Running the Data 😮","Backup Data 🔙"\
+    ,"Review on Website🌐"])
 
-st.write("---")
+
 st.markdown("# Running the Data 😮")
 st.sidebar.markdown("# Page 2: 😮")
 
@@ -65,8 +91,8 @@ form = st.form("form", clear_on_submit=True)
 
 with form:
     source = st.radio("Choose review data source", ('Yelp', 'TrustPilot'))
-    url = st.text_input("URL")
-    pages = st.slider("Number of Pages", 1, 10, 1, step=1)
+    url = st.text_input("URL", placeholder="Enter URL here.")
+    pages = st.slider("Number of Pages", 1, 20, 1, step=1)
     submit = form.form_submit_button("Submit Now")
 
     if submit:
@@ -122,12 +148,13 @@ if data:
 
     st.bar_chart(cnn_model)
 
-    wordcloud = WordCloud().generate(words)
+    wordcloud = WordCloud(background_color="#F5F6F8").generate(words)
 
     # Display the generated image:
     st.set_option('deprecation.showPyplotGlobalUse', False)
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
+    plt.tight_layout(pad=0)
     plt.show()
     st.pyplot()
 

@@ -81,90 +81,97 @@ with st.container():
 tab1,tab2,tab3,tab4 = st.tabs(["Introduction 📈","Running the Data 😮","Backup Data 🔙"\
     ,"Review on Website🌐"])
 
+with tab2:
+    st.markdown("# Running the Data 😮")
+    st.sidebar.markdown("# Page 2: 😮")
 
-st.markdown("# Running the Data 😮")
-st.sidebar.markdown("# Page 2: 😮")
+    st.markdown("#### Step 1:")
 
-st.markdown("#### Step 1:")
+    form = st.form("form", clear_on_submit=True)
 
-form = st.form("form", clear_on_submit=True)
+    with form:
+        p1,p2 = st.columns(2)
+        with p1:
+            source = st.radio("Choose review data source", ('Yelp', 'TrustPilot'))
+        with p2:
+            pages = st.slider("Number of Pages", 1, 20, 1, step=1)
+        url = st.text_input("URL", placeholder="Enter URL here.")
+        submit = form.form_submit_button("Submit Now")
 
-with form:
-    source = st.radio("Choose review data source", ('Yelp', 'TrustPilot'))
-    url = st.text_input("URL", placeholder="Enter URL here.")
-    pages = st.slider("Number of Pages", 1, 20, 1, step=1)
-    submit = form.form_submit_button("Submit Now")
+        if submit:
+            if not validators.url(url):
+                st.error('Invalid URL', icon="🚨")
+            else:
+                st.success(
+                    'Success, please wait for the data to process (can take up to 5 min)',
+                    icon="✅")
 
-    if submit:
-        if not validators.url(url):
-            st.error('Invalid URL', icon="🚨")
-        else:
-            st.success(
-                'Success, please wait for the data to process (can take up to 5 min)',
-                icon="✅")
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                loop.run_until_complete(api_call(source, url, pages))
 
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            loop.run_until_complete(api_call(source, url, pages))
+    st.write('---')
 
-st.write('---')
+    #Async get data START
+    data = st.session_state.get('data', None)
+    #Async get data END
 
-st.markdown("#### Step 3:")
+    if data:
+        st.write(data)
+        st.markdown("# Graphs and Review Data 📊")
+        st.markdown("#### Negative vs. Positive Reviews")
+        cnn_model = pd.DataFrame.from_dict(data['cnn_model'], orient='index')
+        words = data['words']
+        words2v_neg = pd.DataFrame.from_dict(data['words2v_neg'])
+        words2v_pos = pd.DataFrame.from_dict(data['words2v_pos'])
+        absa = pd.DataFrame.from_dict(data['absa'])
 
-c1, c2, c3 = st.columns(3)
-with c2:
-    csv = st.file_uploader("If data does not input, upload the CSV file")
 
-    if csv is not None and csv.type == 'text/csv':
-        df = pd.read_csv(csv)
-        st.write(df)
-    elif csv is not None and csv.type != 'text/csv':
-        st.write('Not a CSV file')
+        st.bar_chart(cnn_model)
 
-    button_style = """
-         <style>
-        .stButton > button {
-            color:black;
-            text-align:center;
-            width:200px;
-            height:55px;
-            }
-        </style>
-        """
 
-st.markdown("# Graphs and Review Data 📊")
-st.sidebar.markdown("# Page 3: 📊")
+        wordcloud = WordCloud(background_color="#F5F6F8").generate(words)
 
-#Async get data START
-data = st.session_state.get('data', None)
-#Async get data END
+        # Display the generated image:
+        st.markdown("#### Most used words")
+        st.set_option('deprecation.showPyplotGlobalUse', False)
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis("off")
+        plt.tight_layout(pad=0)
+        plt.show()
+        st.pyplot()
 
-if data:
-    cnn_model = pd.DataFrame.from_dict(data['cnn_model'], orient='index')
-    words = data['words']
-    words2v_neg = pd.DataFrame.from_dict(data['words2v_neg'])
-    words2v_pos = pd.DataFrame.from_dict(data['words2v_pos'])
-    absa = pd.DataFrame.from_dict(data['absa'])
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("#### Negatively used words")
+            st.write(words2v_neg)
+            st.bar_chart(words2v_neg)
+        with c2:
+            st.markdown("#### Positively used words")
+            st.write(words2v_pos)
+            st.bar_chart(words2v_pos)
 
-    st.bar_chart(cnn_model)
+        st.write(absa)
+        st.bar_chart(absa)
 
-    wordcloud = WordCloud(background_color="#F5F6F8").generate(words)
-
-    # Display the generated image:
-    st.set_option('deprecation.showPyplotGlobalUse', False)
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    plt.tight_layout(pad=0)
-    plt.show()
-    st.pyplot()
-
-    c1, c2 = st.columns(2)
-    with c1:
-        st.write(words2v_neg)
-        st.bar_chart(words2v_neg)
+with tab3:
+    c1, c2, c3 = st.columns(3)
     with c2:
-        st.write(words2v_pos)
-        st.bar_chart(words2v_pos)
+        csv = st.file_uploader("If data does not input, upload the CSV file")
 
-    st.write(absa)
-    st.bar_chart(absa)
+        if csv is not None and csv.type == 'text/csv':
+            df = pd.read_csv(csv)
+            st.write(df)
+        elif csv is not None and csv.type != 'text/csv':
+            st.write('Not a CSV file')
+
+        button_style = """
+            <style>
+            .stButton > button {
+                color:black;
+                text-align:center;
+                width:200px;
+                height:55px;
+                }
+            </style>
+            """

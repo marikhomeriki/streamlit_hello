@@ -83,7 +83,6 @@ tab1,tab2,tab3,tab4 = st.tabs(["Introduction 📈","Running the Data 😮","Back
 
 with tab2:
     st.markdown("# Running the Data 😮")
-    st.sidebar.markdown("# Page 2: 😮")
 
     st.markdown("#### Step 1:")
 
@@ -117,7 +116,6 @@ with tab2:
     #Async get data END
 
     if data:
-        st.write(data)
         st.markdown("# Graphs and Review Data 📊")
         st.markdown("#### Negative vs. Positive Reviews")
         cnn_model = pd.DataFrame.from_dict(data['cnn_model'], orient='index')

@@ -11,6 +11,11 @@ import numpy as np
 import altair as alt
 data = 0
 
+backup_data = {"cnn_model": {
+        "Negative": 1218,
+        "Positive": 307
+    }}
+
 st.set_page_config(page_title="Product Review Analysis",
                    page_icon="tada",
                    layout="wide", )
@@ -206,6 +211,9 @@ with tab2:
         st.bar_chart(absa)
 
 with tab3:
+    backup_cnn_model = pd.DataFrame.from_dict(backup_data['cnn_model'], orient='index')
+    st.bar_chart(backup_cnn_model)
+
     c1, c2, c3 = st.columns(3)
     with c2:
         csv = st.file_uploader("If data does not input, upload the CSV file")
@@ -214,6 +222,7 @@ with tab3:
             df = pd.read_csv(csv)
             df = df.reset_index()
             st.write(df)
+
 
         elif csv is not None and csv.type != 'text/csv':
             st.write('Not a CSV file')

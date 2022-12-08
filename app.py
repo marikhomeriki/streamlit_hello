@@ -109,13 +109,22 @@ with tab2:
         if submit:
             if not validators.url(url):
                 st.error('Invalid URL', icon="🚨")
+
             elif source == "Yelp" and "yelp.co.uk" not in url:
-                st.error('Not a Yelp File',icon="🚨")
+                st.error('Not a Yelp file',icon="🚨")
+
             elif source == "TrustPilot" and "trustpilot.com" not in url:
-                st.error('Not a Trustpilot File',icon="🚨")
+                st.error('Not a Trustpilot file',icon="🚨")
+
             else:
-                st.success(
-                    'Success, please wait for the data to process (can take up to 5 min)',
+                if source == "Yelp" and "yelp.co.uk" in url:
+                    st.success(
+                    'Success, getting analysis from Yelp (can take up to 5 min)',
+                    icon="✅")
+
+                elif source == "Trustpilot" and "trustpilot.com" in url:
+                    st.success(
+                    'Success, getting analysis from Trustpilot (can take up to 5 min)',
                     icon="✅")
 
                 loop = asyncio.new_event_loop()

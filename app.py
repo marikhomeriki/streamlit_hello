@@ -89,6 +89,10 @@ if x==5:
 y = st.sidebar.text_area("Feedback:",max_chars=250)
 st.sidebar.write("---")
 z = st.sidebar.button("Submit")
+if x ==0 or y == '':
+    st.write("Have not filled out the review")
+else:
+    st.write("Thanks for the feedback! It means nothing tho loooool!")
 
 
 with st.container():
@@ -112,8 +116,7 @@ with st.container():
 #         #     , Arun Appulingam")
 #         st.write("By Mariami Khomeriki, Ankur Kaushal, Mathias Freisleben, Arun Appulingam")
 
-tab1,tab2,tab3,tab4 = st.tabs(["Summary 📈","Running the Data 😮","Backup Data 🔙"\
-    ,"Review on Website🌐"])
+tab1,tab2,tab3 = st.tabs(["Summary 📈","Running the Data 😮","Backup Data 🔙"])
 
 with tab1:
     st.markdown('# Summary📈')

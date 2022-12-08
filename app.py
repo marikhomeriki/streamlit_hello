@@ -137,7 +137,7 @@ with tab2:
 
         # with col2:
         #     st.header("AVG")
-        #     st.write(data['average_score'])
+        st.write(data['average_score'])
         st.markdown("# Graphs and Review Data 📊")
         st.markdown("#### Negative vs. Positive Reviews")
         cnn_model = pd.DataFrame.from_dict(data['cnn_model'], orient='index')

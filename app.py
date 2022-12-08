@@ -16,6 +16,32 @@ backup_data = {"cnn_model": {
         "Positive": 307
     }}
 
+backup_absa = {
+    "absa": {
+        "Positive": {
+            "service": 6,
+            "food": 6,
+            "staff": 2,
+            "fries": 2,
+            "manager": 2
+        },
+        "Negative": {
+            "service": 1,
+            "food": 0,
+            "staff": 0,
+            "fries": 0,
+            "manager": 0
+        },
+        "Neutral": {
+            "service": 0,
+            "food": 0,
+            "staff": 0,
+            "fries": 0,
+            "manager": 0
+        }
+    }
+}
+
 st.set_page_config(page_title="Product Review Analysis",
                    page_icon="tada",
                    layout="wide", )
@@ -212,7 +238,10 @@ with tab2:
 
 with tab3:
     backup_cnn_model = pd.DataFrame.from_dict(backup_data['cnn_model'], orient='index')
+    bakcup_absa = pd.DataFrame.from_dict(backup_absa['absa'])
     st.bar_chart(backup_cnn_model)
+    st.bar_chart(bakcup_absa)
+    st.bar_chart(bakcup_absa)
 
     c1, c2, c3 = st.columns(3)
     with c2:

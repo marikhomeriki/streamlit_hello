@@ -117,7 +117,7 @@ with st.container():
 #         #     , Arun Appulingam")
 #         st.write("By Mariami Khomeriki, Ankur Kaushal, Mathias Freisleben, Arun Appulingam")
 
-tab1,tab2,tab3 = st.tabs(["Summary 📈","Running the Data 😮","Backup Data 🔙"])
+tab1,tab2,tab3 = st.tabs(["Summary 📈","Running the Data 😮","Archive 🔙"])
 
 with tab1:
     st.markdown('# Summary📈')
@@ -245,7 +245,7 @@ with tab3:
     backup_cnn_model = pd.DataFrame.from_dict(backup_data['cnn_model'], orient='index')
     bakcup_absa = pd.DataFrame.from_dict(backup_absa['absa'])
     st.markdown("#### Positive vs. Negative Reviews")
-    st.bar_chart(backup_cnn_model)
+    st.bar_chart(backup_cnn_model, x='Sentiment', y='Frequency')
     st.write(bakcup_absa)
     st.markdown("#### Aspect based sentiment analysis")
     st.bar_chart(bakcup_absa)

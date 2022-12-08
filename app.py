@@ -10,11 +10,6 @@ from datetime import datetime
 import numpy as np
 import altair as alt
 
-cnn_model = 0
-words2v_neg = 0
-words2v_pos = 0
-absa = 0
-wordcloud = 0
 
 st.set_page_config(page_title="Product Review Analysis",
                    page_icon="tada",
@@ -134,15 +129,15 @@ with tab2:
 
 
     if data:
-        col1, col2 = st.columns(2)
-        with col1:
-            st.header("Total")
-            total = data['review_count']
-            st.write(total)
+        # col1, col2 = st.columns(2)
+        # with col1:
+        #     st.header("Total")
+        #     total = data['review_count']
+        #     st.write(total)
 
-        with col2:
-            st.header("AVG")
-            st.write(data['average_score'])
+        # with col2:
+        #     st.header("AVG")
+        #     st.write(data['average_score'])
         st.markdown("# Graphs and Review Data 📊")
         st.markdown("#### Negative vs. Positive Reviews")
         cnn_model = pd.DataFrame.from_dict(data['cnn_model'], orient='index')

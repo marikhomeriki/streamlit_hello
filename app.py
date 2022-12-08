@@ -19,25 +19,25 @@ backup_data = {"cnn_model": {
 backup_absa = {
     "absa": {
         "Positive": {
-            "service": 6,
-            "food": 6,
-            "staff": 2,
-            "fries": 2,
-            "manager": 2
+            "service": 78,
+            "food": 91,
+            "staff": 35,
+            "fries": 22,
+            "manager": 8
         },
         "Negative": {
-            "service": 1,
-            "food": 0,
-            "staff": 0,
-            "fries": 0,
-            "manager": 0
+            "service": 190,
+            "food": 130,
+            "staff": 84,
+            "fries": 56,
+            "manager": 73
         },
         "Neutral": {
-            "service": 0,
-            "food": 0,
-            "staff": 0,
-            "fries": 0,
-            "manager": 0
+            "service": 7,
+            "food": 44,
+            "staff": 3,
+            "fries": 13,
+            "manager": 3
         }
     }
 }
@@ -240,7 +240,7 @@ with tab3:
     backup_cnn_model = pd.DataFrame.from_dict(backup_data['cnn_model'], orient='index')
     bakcup_absa = pd.DataFrame.from_dict(backup_absa['absa'])
     st.bar_chart(backup_cnn_model)
-    st.bar_chart(bakcup_absa)
+    st.write(bakcup_absa)
     st.bar_chart(bakcup_absa)
 
     c1, c2, c3 = st.columns(3)

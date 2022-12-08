@@ -10,6 +10,12 @@ from datetime import datetime
 import numpy as np
 import altair as alt
 
+cnn_model = 0
+words2v_neg = 0
+words2v_pos = 0
+absa = 0
+wordcloud = 0
+
 st.set_page_config(page_title="Product Review Analysis",
                    page_icon="tada",
                    layout="wide", )
@@ -184,9 +190,6 @@ with tab2:
             ).encode(
             x='Words',
             y='Scores'))
-
-
-
 
 
         st.write(absa)

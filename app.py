@@ -218,7 +218,7 @@ with tab2:
             # st.bar_chart(words2v_neg)
             words2v_neg.reset_index(inplace = True)
             words2v_neg.columns = ["Words", "Scores"]
-            words2v_neg = words2v_neg.sort_values(by='Scores')
+            words2v_neg = words2v_neg.sort_values(by='Scores', reversed=True)
             st.write(words2v_neg)
             st.altair_chart(alt.Chart(words2v_neg).mark_bar(color='red',
             ).encode(
@@ -231,6 +231,7 @@ with tab2:
             # st.bar_chart(words2v_pos)
             words2v_pos.reset_index(inplace = True)
             words2v_pos.columns = ["Words", "Scores"]
+            words2v_pos = words2v_pos.sort_values(by='Scores', reversed=True)
             st.write(words2v_pos)
             st.altair_chart(alt.Chart(words2v_pos).mark_bar(color='green',
             ).encode(

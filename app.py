@@ -109,6 +109,10 @@ with tab2:
         if submit:
             if not validators.url(url):
                 st.error('Invalid URL', icon="🚨")
+            elif source == "Yelp" and "yelp.co.uk" not in url:
+                st.error('Not a Yelp File',icon="🚨")
+            elif source == "TrustPilot" and "trustpilot.com" not in url:
+                st.error('Not a Trustpilot File',icon="🚨")
             else:
                 st.success(
                     'Success, please wait for the data to process (can take up to 5 min)',

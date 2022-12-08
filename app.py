@@ -89,10 +89,11 @@ if x==5:
 y = st.sidebar.text_area("Feedback:",max_chars=250)
 st.sidebar.write("---")
 z = st.sidebar.button("Submit")
-if x ==0 or y == '':
-    st.sidebar.write("Have not filled out the review")
-else:
-    st.sidebar.write("Thanks for the feedback! It means nothing tho loooool!")
+if z:
+    if x ==0 or y == '':
+        st.sidebar.write("Have not filled out the review")
+    else:
+        st.sidebar.write("Thanks for the feedback! It means nothing tho loooool!")
 
 
 with st.container():

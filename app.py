@@ -114,10 +114,10 @@ with tab2:
                     'Success, please wait for the data to process (can take up to 5 min)',
                     icon="✅")
 
-                # loop = asyncio.new_event_loop()
-                # asyncio.set_event_loop(loop)
-                # loop.run_until_complete(api_call(source, url, pages))
-                api_call(source,url,pages)
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                loop.run_until_complete(api_call(source, url, pages))
+
 
     st.write('---')
 

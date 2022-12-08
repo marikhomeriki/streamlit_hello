@@ -9,7 +9,7 @@ import validators
 from datetime import datetime
 import numpy as np
 import altair as alt
-
+data = 0
 
 st.set_page_config(page_title="Product Review Analysis",
                    page_icon="tada",
@@ -124,6 +124,8 @@ with tab2:
     #Async get data START
     data = st.session_state.get('data', None)
     #Async get data END
+
+
 
 
 

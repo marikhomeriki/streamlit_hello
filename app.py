@@ -238,13 +238,16 @@ with tab2:
 
 
         st.write(absa)
+        st.markdown("#### Aspect based sentiment analysis")
         st.bar_chart(absa)
 
 with tab3:
     backup_cnn_model = pd.DataFrame.from_dict(backup_data['cnn_model'], orient='index')
     bakcup_absa = pd.DataFrame.from_dict(backup_absa['absa'])
+    st.markdown("#### Positive vs. Negative Reviews")
     st.bar_chart(backup_cnn_model)
     st.write(bakcup_absa)
+    st.markdown("#### Aspect based sentiment analysis")
     st.bar_chart(bakcup_absa)
 
     c1, c2, c3 = st.columns(3)

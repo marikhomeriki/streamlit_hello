@@ -130,7 +130,6 @@ with tab2:
 
 
     if data:
-        st.write(data)
         # col1, col2 = st.columns(2)
         # with col1:
         #     st.header("Total")
